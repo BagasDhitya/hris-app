@@ -1,0 +1,68 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+    schemas  = ["employee"]
+}
+
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["multiSchema"]
+}
+
+model Employee {
+    id       Int       @id @default(autoincrement())
+    name     String
+    email    String    @unique
+    clockIns ClockIn[]
+    leaves   Leave[]
+    role     Role      @default(EMPLOYEE)
+
+    @@schema("employee")
+}
+
+model ClockIn {
+    id           Int       @id @default(autoincrement())
+    employeeId   Int
+    clockInTime  DateTime  @default(now())
+    clockOutTime DateTime?
+
+    employee Employee @relation(fields: [employeeId], references: [id])
+
+    @@schema("employee")
+}
+
+model Leave {
+    id         Int         @id @default(autoincrement())
+    employeeId Int
+    leaveType  LeaveType
+    startDate  DateTime
+    endDate    DateTime
+    status     LeaveStatus @default(PENDING)
+
+    employee Employee @relation(fields: [employeeId], references: [id])
+
+    @@schema("employee")
+}
+
+enum Role {
+    HR
+    EMPLOYEE
+
+    @@schema("employee")
+}
+
+enum LeaveType {
+    ANNUAL
+    SICK
+    MATERNITY
+
+    @@schema("employee")
+}
+
+enum LeaveStatus {
+    PENDING
+    APPROVED
+    REJECTED
+
+    @@schema("employee")
+}
