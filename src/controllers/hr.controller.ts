@@ -33,6 +33,7 @@ export class HRController {
     const result = await this.hrService.getClockIn();
     if (result) {
       res.status(200).send({
+        data: result,
         message: "Successfully retrieved employee clock-in data",
         status: res.statusCode,
       });
