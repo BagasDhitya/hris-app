@@ -22,6 +22,7 @@ export class AuthController {
       res.status(404).send({
         message: "Failed to logged in. Check your email or password",
         status: res.statusCode,
+        details: error,
       });
     }
   }
