@@ -14,7 +14,7 @@ export class ErrorHandler {
     const statusCode = err.statusCode || 500;
     const message = err.message || "Internal Server Error";
     console.error(`[Error] ${statusCode}: ${message}`);
-    res.status(statusCode).json({
+    res.status(statusCode).send({
       success: false,
       message: message,
     });
