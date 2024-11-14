@@ -20,16 +20,10 @@ export class AuthController {
         access_token: token,
       });
     } catch (error) {
-      const errorDetails = {
-        name: error instanceof Error ? error.name : "UnknownError",
-        detail:
-          error instanceof Error ? error.message : "An unknown error occurred",
-      };
-      console.log("track error : ", errorDetails);
       res.status(404).send({
         message: "Failed to log in. Check your email or password",
         status: res.statusCode,
-        details: errorDetails,
+        details: error,
       });
     }
   }
