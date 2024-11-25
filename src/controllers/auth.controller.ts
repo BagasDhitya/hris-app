@@ -15,6 +15,7 @@ export class AuthController {
       const token = await this.authService.login(email, password);
       console.log("token : ", token);
       res.status(200).send({
+        email: email,
         message: "Successfully logged in",
         status: res.statusCode,
         access_token: token,
