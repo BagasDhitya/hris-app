@@ -7,7 +7,7 @@ export class AuthService {
   constructor() {
     this.prisma = new PrismaClient();
   }
-  async login(email: string, password: string): Promise<string | null> {
+  async login(email: string, password: string): Promise<{} | null> {
     const employee = await this.prisma.employee.findUnique({
       where: { email: email, password: password },
     });
@@ -24,6 +24,11 @@ export class AuthService {
       }
     );
 
-    return token;
+    return {
+      name: employee.name,
+      email: employee.email,
+      role: employee.role,
+      access_token: token,
+    };
   }
 }

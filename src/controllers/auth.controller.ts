@@ -12,13 +12,11 @@ export class AuthController {
     const { email, password } = req.body;
 
     try {
-      const token = await this.authService.login(email, password);
-      console.log("token : ", token);
+      const data = await this.authService.login(email, password);
       res.status(200).send({
-        email: email,
+        data: data,
         message: "Successfully logged in",
         status: res.statusCode,
-        access_token: token,
       });
     } catch (error) {
       res.status(404).send({
